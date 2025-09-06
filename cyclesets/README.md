@@ -1,88 +1,56 @@
 # CycleSets for OBS
 
-**CycleSets** is an OBS Studio Lua script that lets you define **profiles of scenes** and cycle through them with **multi-tap hotkeys**.  
+CycleSets is an OBS Studio Lua script to define ordered sets of scenes and cycle through them with multi‑tap hotkeys.
 
-Unlike the default *Next/Previous Scene* hotkeys (which cycle through all scenes in your collection), CycleSets gives you fine control over **which scenes are included**, their **order**, and provides **per-profile hotkeys**.  
+Note: Cycles the Preview scene in Studio Mode (not Program).
 
----
-
-## ✨ Features
-
-- **Profiles**  
-  - Create, rename, and delete multiple scene profiles.  
-  - Each profile contains an ordered list of scenes.  
-  - Independent hotkeys per profile.  
-
-- **UI-driven scene selection**  
-  - Pick scenes directly from OBS’s scene list (no typing names).  
-  - Add, remove, and reorder with buttons.  
-
-- **Multi-tap hotkeys**  
-  - First press → recalls the last selected scene.  
-  - Further presses within a short window → advance/step back.  
-  - Pause longer than the window resets to last selected.  
-
-- **Per-profile hotkeys**  
-  - `Cycle Scenes (Profile: <Name>): Next`  
-  - `Cycle Scenes (Profile: <Name>): Previous`  
-  - Hotkeys are created when profiles exist, and automatically removed if profiles are deleted.  
-  - Renaming a profile migrates its hotkey bindings automatically.  
-
-- **Auto-pruning**  
-  - If you delete a scene in OBS, it is automatically removed from all profiles.  
-
-- **Persistence**  
-  - Profiles, last selected scene index, and hotkey bindings persist across OBS restarts.  
+For contributors and AI assistants, see `cyclesets/AGENTS.md` for a detailed spec.
 
 ---
 
-## 🖥️ Environment
+## Features
 
-- OBS Studio **28+**  
-- Lua **5.2** (via OBS Script API)  
-- Windows / macOS / Linux  
-
----
-
-## 📥 Installation
-
-1. Download the latest release of `cycle_sets.lua`.  
-2. In OBS, go to **Tools → Scripts**.  
-3. Click the **+** button and load `cycle_sets.lua`.  
-4. The CycleSets UI will appear in the Scripts window.  
+- Multiple sets: Create, rename, delete per‑project CycleSetSceneLists (scene sets).
+- UI scene picking: Add, remove, reorder scenes from OBS’s scene list.
+- Multi‑tap hotkeys: First press recalls last selected; subsequent taps within a window move next/previous; pause resets.
+- Per‑set hotkeys: CycleSets (Set: <Name>): Next/Previous; created/removed automatically; bindings migrate on rename.
+- Auto‑pruning: Deleted/missing OBS scenes are pruned; updates persist automatically on scene/collection changes.
+- Persistence: Sets and hotkey bindings persist; last‑selected scene index is session‑only.
 
 ---
 
-## ⚙️ Usage
+## Requirements
 
-1. **Create a Profile**  
-   - Enter a name and click **Add Profile**.  
-
-2. **Add Scenes**  
-   - Select a scene from the “Available Scenes” dropdown.  
-   - Click **Add Selected Scene → Profile**.  
-   - Repeat for all scenes you want in that profile.  
-
-3. **Reorder Scenes**  
-   - Use **Move Up/Move Down** to change order.  
-
-4. **Assign Hotkeys**  
-   - Go to **Settings → Hotkeys**.  
-   - Assign keys for:
-     - `Cycle Scenes (Profile: <Name>): Next`  
-     - `Cycle Scenes (Profile: <Name>): Previous`  
-
-5. **Use Multi-Tap Cycling**  
-   - First press → recalls last selected scene.  
-   - Additional presses within the **Tap Window (default 600ms)** cycle through.  
-   - Pause longer than the Tap Window resets to last selected.  
+- OBS Studio 28+
+- Lua 5.2 (via OBS Script API)
+- Windows / macOS / Linux
 
 ---
 
-## 🛠️ Options
+## Installation
 
-- **Tap Window (ms)**  
-  Adjust the maximum interval between taps (150–2000 ms).  
+1. Download `cyclesets.lua` from this repository/release.
+2. In OBS, open Tools → Scripts.
+3. Click + and load `cyclesets.lua`.
+   - If you cloned this repo, the file lives at `cyclesets/cyclesets.lua`.
 
-- **Persist Last Selected**  
-  Store the last selected scene per profile across sessions.
+---
+
+## Usage
+
+1. Create a set: Enter a name → Add CycleSetSceneList.
+2. Add scenes: Pick from Available Scenes → Add Selected Scene → CycleSetSceneList. Reorder or remove as needed.
+3. Assign hotkeys: Settings → Hotkeys → bind for your set:
+   - CycleSets (Set: \<Name>): Next
+   - CycleSets (Set: \<Name>): Previous
+4. Use it: Press Once = last selected; press again within the Tap Window to advance; use Previous to step back.
+
+Tip: Choose the active set from the script UI (Active CycleSetSceneList) before using hotkeys.
+Note: Ensure Studio Mode is enabled; the script switches the Preview scene.
+
+---
+
+## Options
+
+- Tap Window (ms): 150–2000; controls the max interval between taps.
+ 
